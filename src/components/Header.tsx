@@ -37,7 +37,7 @@ const Header = () => {
               <span className="font-display text-xl font-bold text-foreground">
                 Cabinet Dentaire
               </span>
-              <span className="text-xs text-muted-foreground">Dr. Jihane El Amrani</span>
+              <span className="text-xs text-muted-foreground">Dr. Jihane  ouaanda</span>
             </div>
           </Link>
 
