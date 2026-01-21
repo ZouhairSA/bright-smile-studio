@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, CheckCircle2 } from "lucide-react";
@@ -34,6 +34,9 @@ const Appointment = () => {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const apiBase = useMemo(() => import.meta.env.BASE_URL, []);
 
   const services = [
     "Consultation générale",
@@ -97,12 +100,64 @@ const Appointment = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Form is valid - in a real app, this would send to PHP backend
-      setIsSubmitted(true);
+      setIsSubmitting(true);
+      setServerError(null);
+
+      try {
+        const fd = new FormData();
+        // Backend expects "name" (not fullName)
+        fd.append("name", formData.fullName.trim());
+        fd.append("email", formData.email.trim());
+        fd.append("phone", formData.phone.trim());
+        fd.append("date", formData.date);
+        // Backend will default to 09:00 if time is empty
+        if (formData.time) fd.append("time", formData.time);
+
+        // The DB schema does not have a "service" column.
+        // We include it in the message for traceability.
+        const composedMessage = [
+          formData.service ? `Service: ${formData.service}` : "",
+          formData.message ? `Message: ${formData.message}` : "",
+        ]
+          .filter(Boolean)
+          .join("\n");
+
+        if (composedMessage) fd.append("message", composedMessage);
+
+        const res = await fetch(`${apiBase}backend/appointment.php`, {
+          method: "POST",
+          body: fd,
+          credentials: "include",
+        });
+
+        const data = (await res.json()) as {
+          success: boolean;
+          message?: string;
+          errors?: Record<string, string>;
+        };
+
+        if (!data.success) {
+          // Map backend errors to the local field names used in this page.
+          const newErrors: FormErrors = {};
+          if (data.errors?.name) newErrors.fullName = data.errors.name;
+          if (data.errors?.email) newErrors.email = data.errors.email;
+          if (data.errors?.phone) newErrors.phone = data.errors.phone;
+          if (data.errors?.date) newErrors.date = data.errors.date;
+          setErrors(prev => ({ ...prev, ...newErrors }));
+          setServerError(data.message || "Veuillez corriger le formulaire.");
+          return;
+        }
+
+        setIsSubmitted(true);
+      } catch {
+        setServerError("Erreur réseau. Veuillez réessayer.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -114,6 +169,7 @@ const Appointment = () => {
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
+    if (serverError) setServerError(null);
   };
 
   if (isSubmitted) {
@@ -171,6 +227,12 @@ const Appointment = () => {
                 <h2 className="font-display text-2xl font-semibold mb-6">
                   Formulaire de demande
                 </h2>
+
+                {serverError && (
+                  <div className="mb-6 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    {serverError}
+                  </div>
+                )}
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Full Name */}
@@ -312,9 +374,9 @@ const Appointment = () => {
                 </div>
 
                 <div className="mt-8">
-                  <Button type="submit" size="lg" className="w-full md:w-auto">
+                  <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
                     <Calendar className="w-5 h-5" />
-                    Envoyer la demande
+                    {isSubmitting ? "Envoi..." : "Envoyer la demande"}
                   </Button>
                 </div>
               </form>

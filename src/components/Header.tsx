@@ -37,7 +37,7 @@ const Header = () => {
               <span className="font-display text-xl font-bold text-foreground">
                 Cabinet Dentaire
               </span>
-              <span className="text-xs text-muted-foreground">Dr. Sophie Martin</span>
+              <span className="text-xs text-muted-foreground">Dr. Jihane El Amrani</span>
             </div>
           </Link>
 
@@ -57,11 +57,11 @@ const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+33123456789"
+              href="tel:+212612345678"
               className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm font-medium">01 23 45 67 89</span>
+              <span className="text-sm font-medium">+212 6 12 34 56 78</span>
             </a>
             <Link to="/login" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Connexion

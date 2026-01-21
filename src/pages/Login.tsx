@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { LogIn, Eye, EyeOff } from "lucide-react";
@@ -15,14 +15,17 @@ interface FormErrors {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const apiBase = useMemo(() => import.meta.env.BASE_URL, []);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -44,15 +47,49 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       setIsSubmitting(true);
-      // Simulate API call - will be connected to PHP backend
-      setTimeout(() => {
+      setServerError(null);
+
+      try {
+        const fd = new FormData();
+        fd.append("email", formData.email.trim());
+        fd.append("password", formData.password);
+
+        const res = await fetch(`${apiBase}backend/login.php`, {
+          method: "POST",
+          body: fd,
+          credentials: "include",
+        });
+
+        const data = (await res.json()) as {
+          success: boolean;
+          message?: string;
+          user?: { id: number; full_name: string; email: string; role?: string };
+        };
+
+        if (!data.success) {
+          setServerError(data.message || "Identifiants incorrects.");
+          return;
+        }
+
+        // Store user for a simple "Espace patient" page (academic demo).
+        if (data.user) {
+          localStorage.setItem("bss_user", JSON.stringify(data.user));
+        }
+
+        if (data.user?.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+      } catch {
+        setServerError("Erreur réseau. Veuillez réessayer.");
+      } finally {
         setIsSubmitting(false);
-        alert("Connexion simulée - À connecter avec PHP backend");
-      }, 1000);
+      }
     }
   };
 
@@ -62,6 +99,7 @@ const Login = () => {
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
+    if (serverError) setServerError(null);
   };
 
   return (
@@ -85,6 +123,11 @@ const Login = () => {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
+                {serverError && (
+                  <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    {serverError}
+                  </div>
+                )}
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="form-label">

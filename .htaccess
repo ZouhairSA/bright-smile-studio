@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Base folder of this project under htdocs
+  RewriteBase /bright-smile-studio/
+
+  # Do not rewrite real files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Do not rewrite backend (PHP endpoints must remain directly accessible)
+  RewriteRule ^backend/ - [L]
+
+  # SPA fallback: send all other routes to index.html (React Router)
+  RewriteRule . index.html [L]
+</IfModule>
+

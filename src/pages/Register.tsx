@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -36,9 +36,12 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const apiBase = useMemo(() => import.meta.env.BASE_URL, []);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -85,10 +88,47 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    setServerError(null);
+
+    try {
+      const fd = new FormData();
+      fd.append("first_name", formData.firstName.trim());
+      fd.append("last_name", formData.lastName.trim());
+      fd.append("email", formData.email.trim());
+      fd.append("password", formData.password);
+
+      const res = await fetch(`${apiBase}backend/register.php`, {
+        method: "POST",
+        body: fd,
+      });
+
+      const data = (await res.json()) as {
+        success: boolean;
+        message?: string;
+      };
+
+      if (!data.success) {
+        // Email déjà utilisée renvoie 409 côté PHP
+        if (res.status === 409) {
+          setErrors(prev => ({ ...prev, email: data.message || "Cette adresse email est déjà utilisée." }));
+        } else {
+          setServerError(data.message || "Erreur lors de l'inscription.");
+        }
+        return;
+      }
+
+      // Succès → on affiche l'écran de confirmation déjà prévu
       setIsSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setServerError("Erreur réseau. Veuillez réessayer.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -101,6 +141,7 @@ const Register = () => {
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
+    if (serverError) setServerError(null);
   };
 
   if (isSubmitted) {
@@ -150,6 +191,11 @@ const Register = () => {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
+                {serverError && (
+                  <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    {serverError}
+                  </div>
+                )}
                 <div className="grid md:grid-cols-2 gap-4">
                   {/* First Name */}
                   <div>
@@ -314,8 +360,8 @@ const Register = () => {
                 </div>
 
                 {/* Submit */}
-                <Button type="submit" size="lg" className="w-full">
-                  Créer mon compte
+                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                  {isSubmitting ? "Création du compte..." : "Créer mon compte"}
                 </Button>
               </form>
 

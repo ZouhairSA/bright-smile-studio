@@ -53,10 +53,46 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      setIsSubmitted(true);
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitted(false); // Reset in case of error
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.fullName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('message', formData.message + (formData.subject ? `\n\nSujet: ${formData.subject}` : ''));
+
+      const response = await fetch('/bright-smile-studio/backend/contact.php', {
+        method: 'POST',
+        body: formDataToSend,
+        credentials: 'include', // Include session cookie if user is logged in
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        // Handle validation errors from backend
+        if (data.errors) {
+          const backendErrors: FormErrors = {};
+          if (data.errors.name) backendErrors.fullName = data.errors.name;
+          if (data.errors.email) backendErrors.email = data.errors.email;
+          if (data.errors.message) backendErrors.message = data.errors.message;
+          setErrors(backendErrors);
+        } else {
+          alert(data.message || 'Erreur lors de l\'envoi du message.');
+        }
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      alert('Une erreur est survenue. Veuillez réessayer plus tard.');
     }
   };
 
@@ -72,19 +108,19 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Téléphone",
-      content: "01 23 45 67 89",
-      link: "tel:+33123456789",
+      content: "+212 6 12 34 56 78",
+      link: "tel:+212612345678",
     },
     {
       icon: Mail,
       title: "Email",
-      content: "contact@cabinet-dentaire.fr",
-      link: "mailto:contact@cabinet-dentaire.fr",
+      content: "contact@brightsmilestudio.ma",
+      link: "mailto:contact@brightsmilestudio.ma",
     },
     {
       icon: MapPin,
       title: "Adresse",
-      content: "123 Avenue des Champs-Élysées, 75008 Paris",
+      content: "123 Boulevard Mohammed V, Casablanca 20000, Maroc",
       link: "https://maps.google.com",
     },
     {
@@ -246,7 +282,7 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="form-input"
-                      placeholder="06 12 34 56 78"
+                      placeholder="+212 6 12 34 56 78"
                     />
                   </div>
 
