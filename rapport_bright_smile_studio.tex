@@ -1,0 +1,789 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Rapport Bright Smile Studio},
+    pdfauthor={Jihane Ouaanda}
+}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% Configuration des couleurs pour le code
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Configuration de listings pour PHP
+\lstdefinestyle{phpstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=PHP
+}
+
+% Configuration de listings pour SQL
+\lstdefinestyle{sqlstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{red},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=SQL
+}
+
+% Configuration de listings pour JavaScript/TypeScript
+\lstdefinestyle{jsstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{red},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=JavaScript
+}
+
+% En-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Bright Smile Studio}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Rapport de Projet}
+
+% Formatage des titres
+\titleformat{\section}
+{\Large\bfseries\color{blue!70!black}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\large\bfseries\color{blue!50!black}}
+{\thesubsection}{1em}{}
+
+\begin{document}
+
+% Page de titre
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Bright Smile Studio\par}
+    \vspace{0.5cm}
+    {\Large Application Web de Gestion de Cabinet Dentaire\par}
+    \vspace{2cm}
+    
+    % Logo placeholder (à remplacer par le logo réel)
+    \begin{figure}[h]
+        \centering
+        % \includegraphics[width=0.3\textwidth]{logo.png}
+        \framebox[0.3\textwidth]{\parbox{0.25\textwidth}{\centering Logo\\[2cm]}}
+    \end{figure}
+    
+    \vspace{2cm}
+    
+    {\large\bfseries Rapport de Projet\par}
+    \vspace{1cm}
+    
+    {\large
+    \begin{tabular}{ll}
+        \textbf{Auteur :} & Jihane Ouaanda \\
+        \textbf{Date :} & \today \\
+        \textbf{Projet :} & Application Web Full-Stack \\
+    \end{tabular}
+    }
+    
+    \vfill
+    
+    {\large Université / École\par}
+    {\large Année Académique 2024-2025\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+\newpage
+\section{Introduction}
+
+\subsection{Contexte du Projet}
+
+Bright Smile Studio est une application web complète développée pour la gestion d'un cabinet dentaire. Cette application permet aux patients de prendre rendez-vous en ligne, de consulter leur historique, et offre aux administrateurs un tableau de bord complet pour gérer les rendez-vous, les contacts et les utilisateurs.
+
+\subsection{Objectifs du Projet}
+
+Les objectifs principaux de ce projet sont :
+
+\begin{itemize}
+    \item Créer une interface utilisateur moderne et intuitive pour les patients
+    \item Permettre la prise de rendez-vous en ligne
+    \item Offrir un espace personnel aux patients pour consulter leur historique
+    \item Fournir un tableau de bord administratif complet
+    \item Gérer efficacement les contacts et messages des patients
+    \item Assurer la sécurité des données avec une authentification robuste
+\end{itemize}
+
+\subsection{Technologies Utilisées}
+
+\begin{description}
+    \item[Frontend :] React 18.3, TypeScript, Tailwind CSS, shadcn/ui, React Router
+    \item[Backend :] PHP 8.2, PDO, Sessions PHP
+    \item[Base de données :] MySQL (MariaDB via XAMPP)
+    \item[Outils :] Vite, npm, Git
+\end{description}
+
+\newpage
+\section{Architecture de la Base de Données}
+
+\subsection{Schéma Général}
+
+La base de données \texttt{bright\_smile\_studio} est composée de trois tables principales qui sont liées entre elles par des clés étrangères.
+
+\subsection{Table \texttt{users}}
+
+Cette table stocke les informations des utilisateurs (patients et administrateurs).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Colonne} & \textbf{Type} & \textbf{Contraintes} & \textbf{Description} \\
+\hline
+\texttt{id} & INT UNSIGNED & PRIMARY KEY, AUTO\_INCREMENT & Identifiant unique \\
+\hline
+\texttt{full\_name} & VARCHAR(150) & NOT NULL & Nom complet de l'utilisateur \\
+\hline
+\texttt{email} & VARCHAR(255) & NOT NULL, UNIQUE & Adresse email (unique) \\
+\hline
+\texttt{password} & VARCHAR(255) & NOT NULL & Mot de passe hashé (bcrypt) \\
+\hline
+\texttt{role} & ENUM('user','admin') & NOT NULL, DEFAULT 'user' & Rôle de l'utilisateur \\
+\hline
+\texttt{created\_at} & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP & Date de création \\
+\hline
+\end{tabular}
+\caption{Structure de la table \texttt{users}}
+\end{table}
+
+\subsection{Table \texttt{appointments}}
+
+Cette table stocke tous les rendez-vous pris par les patients.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Colonne} & \textbf{Type} & \textbf{Contraintes} & \textbf{Description} \\
+\hline
+\texttt{id} & INT UNSIGNED & PRIMARY KEY, AUTO\_INCREMENT & Identifiant unique \\
+\hline
+\texttt{user\_id} & INT UNSIGNED & FOREIGN KEY, NULLABLE & Référence à \texttt{users.id} \\
+\hline
+\texttt{name} & VARCHAR(150) & NOT NULL & Nom du patient \\
+\hline
+\texttt{email} & VARCHAR(255) & NOT NULL & Email du patient \\
+\hline
+\texttt{phone} & VARCHAR(30) & NOT NULL & Téléphone du patient \\
+\hline
+\texttt{appointment\_date} & DATETIME & NOT NULL & Date et heure du rendez-vous \\
+\hline
+\texttt{message} & TEXT & NULLABLE & Message optionnel \\
+\hline
+\end{tabular}
+\caption{Structure de la table \texttt{appointments}}
+\end{table}
+
+\subsection{Table \texttt{contacts}}
+
+Cette table stocke les messages de contact envoyés par les visiteurs.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Colonne} & \textbf{Type} & \textbf{Contraintes} & \textbf{Description} \\
+\hline
+\texttt{id} & INT UNSIGNED & PRIMARY KEY, AUTO\_INCREMENT & Identifiant unique \\
+\hline
+\texttt{user\_id} & INT UNSIGNED & FOREIGN KEY, NULLABLE & Référence à \texttt{users.id} \\
+\hline
+\texttt{name} & VARCHAR(150) & NOT NULL & Nom du contact \\
+\hline
+\texttt{email} & VARCHAR(255) & NOT NULL & Email du contact \\
+\hline
+\texttt{message} & TEXT & NOT NULL & Message du contact \\
+\hline
+\texttt{created\_at} & TIMESTAMP & NOT NULL, DEFAULT CURRENT\_TIMESTAMP & Date de création \\
+\hline
+\end{tabular}
+\caption{Structure de la table \texttt{contacts}}
+\end{table}
+
+\subsection{Relations entre les Tables}
+
+\begin{figure}[H]
+\centering
+\begin{verbatim}
+users (1) ────────< (0..n) appointments
+  │                    │
+  │                    └─ user_id (FK)
+  │
+  └───────< (0..n) contacts
+              │
+              └─ user_id (FK)
+\end{verbatim}
+\caption{Diagramme des relations entre les tables}
+\end{figure}
+
+Les relations sont définies avec :
+\begin{itemize}
+    \item \texttt{ON DELETE SET NULL} : Si un utilisateur est supprimé, ses rendez-vous et contacts restent mais \texttt{user\_id} devient NULL
+    \item \texttt{ON UPDATE CASCADE} : Si l'ID d'un utilisateur change, les références sont mises à jour automatiquement
+\end{itemize}
+
+\newpage
+\section{Fonctionnalités Principales}
+
+\subsection{Authentification}
+
+\subsubsection{Inscription}
+
+Les utilisateurs peuvent créer un compte en fournissant :
+\begin{itemize}
+    \item Prénom et nom
+    \item Adresse email (unique)
+    \item Mot de passe (minimum 8 caractères avec majuscule, minuscule et chiffre)
+\end{itemize}
+
+Le mot de passe est hashé avec \texttt{password\_hash()} utilisant l'algorithme par défaut de PHP (bcrypt).
+
+\begin{lstlisting}[style=phpstyle, caption=Extrait de register.php]
+$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+$insert = $pdo->prepare('
+    INSERT INTO users (full_name, email, password, role)
+    VALUES (:full_name, :email, :password, :role)
+');
+
+$insert->execute([
+    ':full_name' => $fullName,
+    ':email'     => $email,
+    ':password'  => $passwordHash,
+    ':role'      => 'user',
+]);
+\end{lstlisting}
+
+\subsubsection{Connexion}
+
+La connexion vérifie :
+\begin{enumerate}
+    \item L'existence de l'email dans la base de données
+    \item La correspondance du mot de passe avec \texttt{password\_verify()}
+    \item La création d'une session PHP sécurisée
+\end{enumerate}
+
+\begin{lstlisting}[style=phpstyle, caption=Extrait de login.php]
+$stmt = $pdo->prepare('
+    SELECT id, full_name, email, password, role 
+    FROM users 
+    WHERE email = :email 
+    LIMIT 1
+');
+$stmt->execute([':email' => $email]);
+$user = $stmt->fetch();
+
+if (!$user || !password_verify($password, $user['password'])) {
+    login_error('Identifiants incorrects.', 401);
+}
+
+$_SESSION['user_id'] = (int)$user['id'];
+$_SESSION['full_name'] = $user['full_name'];
+$_SESSION['user_email'] = $user['email'];
+$_SESSION['role'] = $user['role'] ?? 'user';
+\end{lstlisting}
+
+\subsection{Gestion des Rendez-vous}
+
+\subsubsection{Création d'un Rendez-vous}
+
+Les patients peuvent prendre rendez-vous via un formulaire qui collecte :
+\begin{itemize}
+    \item Nom complet
+    \item Email
+    \item Téléphone
+    \item Date souhaitée
+    \item Heure préférée (optionnelle)
+    \item Message (optionnel)
+\end{itemize}
+
+Si l'utilisateur est connecté, le rendez-vous est automatiquement lié à son compte via \texttt{user\_id}.
+
+\begin{lstlisting}[style=phpstyle, caption=Extrait de appointment.php]
+$userId = isset($_SESSION['user_id']) 
+    ? (int)$_SESSION['user_id'] 
+    : null;
+
+$stmt = $pdo->prepare('
+    INSERT INTO appointments 
+    (user_id, name, email, phone, appointment_date, message)
+    VALUES (:user_id, :name, :email, :phone, :appointment_date, :message)
+');
+
+$stmt->execute([
+    ':user_id'          => $userId,
+    ':name'             => $name,
+    ':email'            => $email,
+    ':phone'            => $phone,
+    ':appointment_date' => $appointmentDateTime,
+    ':message'          => $message,
+]);
+\end{lstlisting}
+
+\subsubsection{Historique des Rendez-vous}
+
+Une fonctionnalité clé permet aux utilisateurs de consulter leur historique de rendez-vous. Le système recherche tous les rendez-vous associés à l'email de l'utilisateur connecté.
+
+\begin{lstlisting}[style=phpstyle, caption=Extrait de user_appointments.php]
+$stmt = $pdo->prepare('
+    SELECT 
+        id, name, email, phone, appointment_date, message
+    FROM appointments
+    WHERE email = :email
+    ORDER BY appointment_date DESC
+');
+
+$stmt->execute([':email' => $email]);
+$appointments = $stmt->fetchAll();
+\end{lstlisting}
+
+L'interface affiche chaque rendez-vous avec :
+\begin{itemize}
+    \item Date et heure formatées en français
+    \item Numéro de téléphone
+    \item Email
+    \item Message (si présent)
+    \item Badge indiquant si le rendez-vous est "À venir" ou "Passé"
+\end{itemize}
+
+\subsection{Interface Administrateur}
+
+\subsubsection{Tableau de Bord Admin}
+
+L'interface administrateur offre trois sections principales :
+
+\begin{enumerate}
+    \item \textbf{Gestion des Utilisateurs}
+    \begin{itemize}
+        \item Liste de tous les utilisateurs
+        \item Création de nouveaux utilisateurs
+        \item Modification des informations utilisateur
+        \item Suppression d'utilisateurs (avec protection contre l'auto-suppression)
+    \end{itemize}
+    
+    \item \textbf{Gestion des Rendez-vous}
+    \begin{itemize}
+        \item Vue complète de tous les rendez-vous
+        \item Affichage des rendez-vous liés à un utilisateur connecté
+        \item Modification et suppression de rendez-vous
+    \end{itemize}
+    
+    \item \textbf{Gestion des Contacts}
+    \begin{itemize}
+        \item Liste de tous les messages de contact
+        \item Modification et suppression de messages
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Sécurité de l'Interface Admin}
+
+L'accès à l'interface admin est protégé par la fonction \texttt{require\_admin()} qui vérifie :
+
+\begin{lstlisting}[style=phpstyle, caption=Extrait de admin/common.php]
+function require_admin(): void
+{
+    ensure_session();
+    
+    $role = $_SESSION['role'] ?? 'user';
+    if ($role !== 'admin') {
+        http_response_code(403);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Accès refusé. Administrateur requis.',
+        ]);
+        exit;
+    }
+}
+\end{lstlisting}
+
+\newpage
+\section{Interfaces Utilisateur}
+
+\subsection{Interface Patient (Dashboard)}
+
+L'interface utilisateur se compose de plusieurs sections :
+
+\subsubsection{Informations Personnelles}
+
+Affiche les informations de base de l'utilisateur connecté :
+\begin{itemize}
+    \item Nom complet
+    \item Email
+    \item ID utilisateur
+\end{itemize}
+
+\subsubsection{Actions Rapides}
+
+Boutons d'action permettant de :
+\begin{itemize}
+    \item Prendre un nouveau rendez-vous
+    \item Contacter le cabinet
+    \item Se déconnecter
+\end{itemize}
+
+\subsubsection{Historique des Rendez-vous}
+
+Cette section affiche automatiquement tous les rendez-vous associés à l'email de l'utilisateur. Chaque carte de rendez-vous contient :
+
+\begin{figure}[H]
+\centering
+\begin{verbatim}
+┌─────────────────────────────────────┐
+│ 📅 Rendez-vous #123                 │
+│                                     │
+│ 🕐 Vendredi 15 mars 2024 à 14:30   │
+│ 📞 06 12 34 56 78                   │
+│ ✉️  patient@email.com               │
+│ 💬 Message optionnel...             │
+│                                     │
+│                    [À venir]        │
+└─────────────────────────────────────┘
+\end{verbatim}
+\caption{Structure d'une carte de rendez-vous}
+\end{figure}
+
+\subsection{Interface Administrateur}
+
+\subsubsection{Section Utilisateurs}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Action} & \textbf{Description} \\
+\hline
+Ajouter & Formulaire pour créer un nouvel utilisateur \\
+\hline
+Modifier & Édition via prompt (nom, email, rôle) \\
+\hline
+Supprimer & Suppression avec confirmation \\
+\hline
+\end{tabular}
+\caption{Actions disponibles sur les utilisateurs}
+\end{table}
+
+\subsubsection{Section Rendez-vous}
+
+Tableau complet affichant :
+\begin{itemize}
+    \item ID du rendez-vous
+    \item Informations utilisateur (si connecté)
+    \item Nom, email, téléphone
+    \item Date et heure
+    \item Actions : Modifier / Supprimer
+\end{itemize}
+
+\subsubsection{Section Contacts}
+
+Gestion des messages de contact avec possibilité de :
+\begin{itemize}
+    \item Consulter tous les messages
+    \item Modifier un message
+    \item Supprimer un message
+\end{itemize}
+
+\newpage
+\section{Exemples de Code}
+
+\subsection{Requêtes SQL Principales}
+
+\subsubsection{Récupération des Rendez-vous par Email}
+
+\begin{lstlisting}[style=sqlstyle, caption=Requête SQL pour l'historique]
+SELECT 
+    id,
+    name,
+    email,
+    phone,
+    appointment_date,
+    message
+FROM appointments
+WHERE email = :email
+ORDER BY appointment_date DESC;
+\end{lstlisting}
+
+\subsubsection{Récupération avec Jointure}
+
+\begin{lstlisting}[style=sqlstyle, caption=Requête avec jointure pour l'admin]
+SELECT 
+    a.id,
+    a.user_id,
+    u.full_name AS user_full_name,
+    u.email AS user_email,
+    a.name,
+    a.email,
+    a.phone,
+    a.appointment_date,
+    a.message
+FROM appointments a
+LEFT JOIN users u ON u.id = a.user_id
+ORDER BY a.id DESC;
+\end{lstlisting}
+
+\subsection{Code Frontend React}
+
+\subsubsection{Chargement de l'Historique}
+
+\begin{lstlisting}[style=jsstyle, caption=Chargement des rendez-vous dans Dashboard.tsx]
+useEffect(() => {
+    if (!user?.email) return;
+    
+    const loadAppointments = async () => {
+        setLoadingAppointments(true);
+        try {
+            const response = await fetch(
+                `${apiBase}backend/user_appointments.php?email=${
+                    encodeURIComponent(user.email)
+                }`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+            
+            const data = await response.json();
+            
+            if (data.success && data.appointments) {
+                setAppointments(data.appointments);
+            }
+        } catch (error) {
+            console.error("Erreur:", error);
+        } finally {
+            setLoadingAppointments(false);
+        }
+    };
+    
+    loadAppointments();
+}, [user?.email, apiBase]);
+\end{lstlisting}
+
+\subsubsection{Affichage des Rendez-vous}
+
+\begin{lstlisting}[style=jsstyle, caption=Rendu de la liste des rendez-vous]
+{appointments.map((appointment) => {
+    const appointmentDate = new Date(appointment.appointment_date);
+    const formattedDate = appointmentDate.toLocaleDateString("fr-FR", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+    const formattedTime = appointmentDate.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+    
+    return (
+        <div key={appointment.id} className="appointment-card">
+            <h3>Rendez-vous #{appointment.id}</h3>
+            <p>{formattedDate} à {formattedTime}</p>
+            <p>{appointment.phone}</p>
+            <p>{appointment.email}</p>
+            {appointment.message && <p>{appointment.message}</p>}
+            <span className={appointmentDate >= new Date() 
+                ? "badge-upcoming" 
+                : "badge-past"}>
+                {appointmentDate >= new Date() ? "À venir" : "Passé"}
+            </span>
+        </div>
+    );
+})}
+\end{lstlisting}
+
+\newpage
+\section{Captures d'Écran et Schémas}
+
+\subsection{Placeholders pour les Captures}
+
+Les captures d'écran suivantes devraient être ajoutées au rapport :
+
+\begin{enumerate}
+    \item \textbf{Page d'accueil} : Interface principale avec hero section
+    \item \textbf{Formulaire de rendez-vous} : Formulaire de prise de rendez-vous
+    \item \textbf{Dashboard utilisateur} : Interface avec historique des rendez-vous
+    \item \textbf{Tableau de bord admin} : Vue complète de l'interface administrateur
+    \item \textbf{Formulaire de contact} : Page de contact
+\end{enumerate}
+
+\textit{Note : Pour ajouter les captures, utilisez :}
+\begin{verbatim}
+\includegraphics[width=0.8\textwidth]{captures/dashboard.png}
+\end{verbatim}
+
+\subsection{Schéma de Navigation}
+
+\begin{figure}[H]
+\centering
+\begin{verbatim}
+                    [Page d'accueil]
+                         |
+        +----------------+----------------+
+        |                |                |
+   [À propos]      [Services]      [Contact]
+        |                |                |
+        |                |                |
+    [Rendez-vous] ← [Connexion] → [Inscription]
+        |                |
+        |         [Dashboard Utilisateur]
+        |                |
+        |         [Historique Rendez-vous]
+        |
+   [Admin Dashboard]
+        |
+    +---+---+---+
+    |   |   |   |
+ [Users] [Appts] [Contacts]
+\end{verbatim}
+\caption{Schéma de navigation de l'application}
+\end{figure}
+
+\newpage
+\section{Sécurité et Bonnes Pratiques}
+
+\subsection{Sécurité Implémentée}
+
+\begin{itemize}
+    \item \textbf{Hashage des mots de passe} : Utilisation de \texttt{password\_hash()} avec bcrypt
+    \item \textbf{Requêtes préparées} : Protection contre les injections SQL avec PDO
+    \item \textbf{Validation des données} : Vérification côté serveur de tous les inputs
+    \item \textbf{Sessions sécurisées} : Régénération de session ID après connexion
+    \item \textbf{Contrôle d'accès} : Vérification du rôle utilisateur pour les pages admin
+    \item \textbf{Protection CSRF} : Sessions PHP pour valider les requêtes
+\end{itemize}
+
+\subsection{Validation des Données}
+
+Tous les formulaires sont validés à la fois :
+\begin{enumerate}
+    \item \textbf{Côté client} : Pour une meilleure expérience utilisateur
+    \item \textbf{Côté serveur} : Pour la sécurité absolue
+\end{enumerate}
+
+Exemple de validation email :
+\begin{lstlisting}[style=phpstyle, caption=Validation email]
+if ($email === '') {
+    $errors['email'] = 'L\'adresse email est requise.';
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = 'L\'adresse email n\'est pas valide.';
+}
+\end{lstlisting}
+
+\newpage
+\section{Conclusion et Perspectives}
+
+\subsection{Bilan du Projet}
+
+Le projet Bright Smile Studio a permis de développer une application web complète et fonctionnelle qui répond aux besoins d'un cabinet dentaire moderne. Les fonctionnalités principales ont été implémentées avec succès :
+
+\begin{itemize}
+    \item Système d'authentification sécurisé
+    \item Gestion complète des rendez-vous
+    \item Interface utilisateur intuitive
+    \item Tableau de bord administratif complet
+    \item Affichage automatique de l'historique des rendez-vous
+\end{itemize}
+
+\subsection{Points Forts}
+
+\begin{enumerate}
+    \item \textbf{Architecture moderne} : Utilisation de technologies récentes (React, TypeScript, PHP 8.2)
+    \item \textbf{Sécurité} : Implémentation de bonnes pratiques de sécurité
+    \item \textbf{Expérience utilisateur} : Interface moderne et responsive
+    \item \textbf{Maintenabilité} : Code structuré et bien organisé
+\end{enumerate}
+
+\subsection{Perspectives d'Amélioration}
+
+Plusieurs améliorations pourraient être apportées au projet :
+
+\begin{enumerate}
+    \item \textbf{Notifications} : Système d'email pour confirmer les rendez-vous
+    \item \textbf{Recherche et filtres} : Filtrage avancé dans l'historique
+    \item \textbf{Export de données} : Export PDF ou Excel des rendez-vous
+    \item \textbf{Calendrier interactif} : Vue calendrier pour les rendez-vous
+    \item \textbf{Rappels automatiques} : SMS ou email de rappel avant le rendez-vous
+    \item \textbf{Statistiques} : Tableaux de bord avec graphiques pour l'admin
+    \item \textbf{Multi-langue} : Support de plusieurs langues
+    \item \textbf{Application mobile} : Développement d'une application mobile native
+\end{enumerate}
+
+\subsection{Conclusion}
+
+Bright Smile Studio représente une solution complète et moderne pour la gestion d'un cabinet dentaire. L'application offre une expérience utilisateur fluide tout en fournissant aux administrateurs les outils nécessaires pour gérer efficacement les rendez-vous et les contacts.
+
+Le système d'historique des rendez-vous, fonctionnalité clé du projet, permet aux patients de consulter facilement leur historique, améliorant ainsi la transparence et la satisfaction client.
+
+\vspace{1cm}
+\noindent\textit{Document généré le \today}
+
+\end{document}

@@ -24,11 +24,11 @@ const About = () => {
   ];
 
   const qualifications = [
-    "Doctorat en Chirurgie Dentaire - Université Paris Descartes",
-    "Spécialisation en Orthodontie - Faculté de Médecine de Paris",
+    "Doctorat en Chirurgie Dentaire - Université Hassan II Casablanca",
+    "Spécialisation en Orthodontie - Faculté de Médecine Dentaire de Casablanca",
     "Certificat en Implantologie Avancée",
     "Formation continue en Dentisterie Esthétique",
-    "Membre de l'Association Dentaire Française",
+    "Membre de l'Association Dentaire Marocaine",
   ];
 
   return (
@@ -72,7 +72,7 @@ const About = () => {
                 Chirurgien-dentiste diplômée, passionnée par mon métier depuis plus de 15 ans.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Après mes études à l'Université Paris Descartes, j'ai perfectionné ma pratique 
+                Après mes études à l'Université Hassan II de Casablanca, j'ai perfectionné ma pratique 
                 à travers diverses spécialisations, notamment en orthodontie et en implantologie. 
                 Mon objectif est d'offrir à chaque patient des soins personnalisés et de qualité, 
                 dans un environnement où il se sent en confiance.

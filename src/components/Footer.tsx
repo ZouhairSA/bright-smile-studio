@@ -95,26 +95,26 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <span className="text-primary-foreground/70 text-sm">
-                  123 Avenue des Champs-Élysées<br />75008 Paris, France
+                  123 Boulevard Mohammed V<br />Casablanca 20000, Maroc
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="tel:+33123456789" className="text-primary-foreground/70 text-sm hover:text-primary transition-colors">
-                  01 23 45 67 89
+                <a href="tel:+212612345678" className="text-primary-foreground/70 text-sm hover:text-primary transition-colors">
+                  +212 6 12 34 56 78
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="mailto:contact@cabinet-dentaire.fr" className="text-primary-foreground/70 text-sm hover:text-primary transition-colors">
-                  contact@cabinet-dentaire.fr
+                <a href="mailto:contact@brightsmilestudio.ma" className="text-primary-foreground/70 text-sm hover:text-primary transition-colors">
+                  contact@brightsmilestudio.ma
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <div className="text-primary-foreground/70 text-sm">
-                  <p>Lun - Ven: 9h00 - 19h00</p>
-                  <p>Sam: 9h00 - 13h00</p>
+                  <p>Lun - Ven: 9h - 19h</p>
+                  <p>Sam: 9h - 13h</p>
                 </div>
               </div>
             </div>
