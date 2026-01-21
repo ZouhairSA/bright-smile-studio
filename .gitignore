@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# AWS Deployment
+eb-deploy/
+backend-deploy.zip
+aws-config.json
+*.pem
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

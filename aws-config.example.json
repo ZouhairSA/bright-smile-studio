@@ -1,0 +1,31 @@
+{
+  "aws": {
+    "region": "eu-west-3",
+    "accountId": "VOTRE_ACCOUNT_ID"
+  },
+  "rds": {
+    "instanceIdentifier": "bright-smile-db",
+    "dbName": "bright_smile_studio",
+    "username": "admin",
+    "password": "CHANGEZ_MOI",
+    "instanceClass": "db.t3.micro",
+    "allocatedStorage": 20
+  },
+  "elasticBeanstalk": {
+    "applicationName": "bright-smile-studio",
+    "environmentName": "bright-smile-backend-prod",
+    "platform": "PHP 8.2",
+    "instanceType": "t3.micro"
+  },
+  "s3": {
+    "bucketName": "bright-smile-studio-frontend",
+    "region": "eu-west-3"
+  },
+  "cloudfront": {
+    "enabled": true,
+    "comment": "Bright Smile Studio CDN"
+  },
+  "backend": {
+    "basePath": "/bright-smile-studio/backend"
+  }
+}
