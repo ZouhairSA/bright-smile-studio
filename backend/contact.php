@@ -1,17 +1,6 @@
 <?php
-/**
- * Contact form endpoint
- *
- * Responsibilities:
- * - Receive contact form data via HTTP POST
- * - Validate and sanitize required fields
- * - Store the message in the `contacts` table
- * - Return a JSON response describing the result
- */
-
 header('Content-Type: application/json; charset=utf-8');
 
-// Start session so we can optionally link the message to a logged-in user.
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -27,14 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 require_once __DIR__ . '/config.php';
 
-/**
- * Helper to send an error response for the contact form.
- *
- * @param string $message
- * @param array<string, string> $errors
- * @param int $statusCode
- * @return void
- */
 function contact_error(string $message, array $errors = [], int $statusCode = 400): void
 {
     http_response_code($statusCode);
@@ -46,7 +27,6 @@ function contact_error(string $message, array $errors = [], int $statusCode = 40
     exit;
 }
 
-// Retrieve and sanitize inputs.
 $name    = isset($_POST['name']) ? trim($_POST['name']) : '';
 $email   = isset($_POST['email']) ? trim($_POST['email']) : '';
 $message = isset($_POST['message']) ? trim($_POST['message']) : '';
@@ -73,7 +53,6 @@ if (!empty($errors)) {
     contact_error('Certains champs sont invalides.', $errors, 422);
 }
 
-// Link to a user if the visitor is logged in; otherwise keep NULL.
 $userId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
 
 try {

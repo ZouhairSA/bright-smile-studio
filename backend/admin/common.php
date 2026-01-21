@@ -1,20 +1,8 @@
 <?php
-/**
- * Admin common helpers
- *
- * This file centralizes access control for admin endpoints.
- * All admin endpoints must include this file and call require_admin().
- */
-
 header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../config.php';
 
-/**
- * Ensure a PHP session is active.
- *
- * @return void
- */
 function ensure_session(): void
 {
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -22,11 +10,6 @@ function ensure_session(): void
     }
 }
 
-/**
- * Require that the current user is authenticated and has role=admin.
- *
- * @return void
- */
 function require_admin(): void
 {
     ensure_session();

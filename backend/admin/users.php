@@ -1,14 +1,4 @@
 <?php
-/**
- * Admin endpoint: manage users
- *
- * Supported operations:
- * - GET:    list all users
- * - POST:   create / update / delete depending on "action"
- *
- * This endpoint is protected by require_admin() (see common.php).
- */
-
 require_once __DIR__ . '/common.php';
 require_admin();
 
@@ -66,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             try {
-                // Email unique
                 $stmt = $pdo->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
                 $stmt->execute([':email' => $email]);
                 if ($stmt->fetch()) {
@@ -124,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             try {
-                // Email unique (autre que l'utilisateur courant)
                 $stmt = $pdo->prepare('SELECT id FROM users WHERE email = :email AND id <> :id LIMIT 1');
                 $stmt->execute([':email' => $email, ':id' => $id]);
                 if ($stmt->fetch()) {
@@ -161,7 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            // Empêcher un admin de se supprimer lui-même (pour ne pas perdre l'accès)
             if (isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === $id) {
                 http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Vous ne pouvez pas supprimer votre propre compte administrateur.']);

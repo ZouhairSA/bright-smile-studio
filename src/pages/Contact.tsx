@@ -60,7 +60,7 @@ const Contact = () => {
       return;
     }
 
-    setIsSubmitted(false); // Reset in case of error
+    setIsSubmitted(false);
 
     try {
       const formDataToSend = new FormData();
@@ -71,7 +71,7 @@ const Contact = () => {
       const response = await fetch('/bright-smile-studio/backend/contact.php', {
         method: 'POST',
         body: formDataToSend,
-        credentials: 'include', // Include session cookie if user is logged in
+        credentials: 'include',
       });
 
       const data = await response.json();
@@ -79,7 +79,6 @@ const Contact = () => {
       if (data.success) {
         setIsSubmitted(true);
       } else {
-        // Handle validation errors from backend
         if (data.errors) {
           const backendErrors: FormErrors = {};
           if (data.errors.name) backendErrors.fullName = data.errors.name;
@@ -158,7 +157,6 @@ const Contact = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
       <section className="relative py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
@@ -175,11 +173,9 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section className="section-padding bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-12">
-            {/* Contact Info */}
             <div className="space-y-6">
               <h2 className="font-display text-2xl font-semibold">
                 Nos coordonnées
@@ -207,7 +203,6 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* Map Placeholder */}
               <div className="mt-8">
                 <h3 className="font-display text-lg font-semibold mb-4">
                   Notre localisation
@@ -216,15 +211,13 @@ const Contact = () => {
                   <div className="text-center p-6">
                     <MapPin className="w-12 h-12 text-primary/50 mx-auto mb-3" />
                     <p className="text-muted-foreground text-sm">
-                      Carte Google Maps<br />
-                      <span className="text-xs">(Intégration à venir avec PHP)</span>
+                      Carte Google Maps
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Contact Form */}
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-dental">
                 <h2 className="font-display text-2xl font-semibold mb-6">
@@ -232,7 +225,6 @@ const Contact = () => {
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Full Name */}
                   <div>
                     <label htmlFor="fullName" className="form-label">
                       Nom complet <span className="text-destructive">*</span>
@@ -251,7 +243,6 @@ const Contact = () => {
                     )}
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label htmlFor="email" className="form-label">
                       Adresse email <span className="text-destructive">*</span>
@@ -270,7 +261,6 @@ const Contact = () => {
                     )}
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label htmlFor="phone" className="form-label">
                       Téléphone
@@ -286,7 +276,6 @@ const Contact = () => {
                     />
                   </div>
 
-                  {/* Subject */}
                   <div>
                     <label htmlFor="subject" className="form-label">
                       Sujet
@@ -307,7 +296,6 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Message */}
                 <div className="mt-6">
                   <label htmlFor="message" className="form-label">
                     Message <span className="text-destructive">*</span>

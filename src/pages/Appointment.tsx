@@ -56,14 +56,12 @@ const Appointment = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    // Full name validation
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Le nom complet est requis";
     } else if (formData.fullName.trim().length < 2) {
       newErrors.fullName = "Le nom doit contenir au moins 2 caractères";
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "L'adresse email est requise";
@@ -71,7 +69,6 @@ const Appointment = () => {
       newErrors.email = "Veuillez entrer une adresse email valide";
     }
 
-    // Phone validation
     const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
     if (!formData.phone.trim()) {
       newErrors.phone = "Le numéro de téléphone est requis";
@@ -79,7 +76,6 @@ const Appointment = () => {
       newErrors.phone = "Veuillez entrer un numéro de téléphone français valide";
     }
 
-    // Date validation
     if (!formData.date) {
       newErrors.date = "Veuillez sélectionner une date";
     } else {
@@ -91,7 +87,6 @@ const Appointment = () => {
       }
     }
 
-    // Service validation
     if (!formData.service) {
       newErrors.service = "Veuillez sélectionner un service";
     }
@@ -109,16 +104,12 @@ const Appointment = () => {
 
       try {
         const fd = new FormData();
-        // Backend expects "name" (not fullName)
         fd.append("name", formData.fullName.trim());
         fd.append("email", formData.email.trim());
         fd.append("phone", formData.phone.trim());
         fd.append("date", formData.date);
-        // Backend will default to 09:00 if time is empty
         if (formData.time) fd.append("time", formData.time);
 
-        // The DB schema does not have a "service" column.
-        // We include it in the message for traceability.
         const composedMessage = [
           formData.service ? `Service: ${formData.service}` : "",
           formData.message ? `Message: ${formData.message}` : "",
@@ -141,7 +132,6 @@ const Appointment = () => {
         };
 
         if (!data.success) {
-          // Map backend errors to the local field names used in this page.
           const newErrors: FormErrors = {};
           if (data.errors?.name) newErrors.fullName = data.errors.name;
           if (data.errors?.email) newErrors.email = data.errors.email;
@@ -165,7 +155,6 @@ const Appointment = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -200,7 +189,6 @@ const Appointment = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
       <section className="relative py-20 bg-muted">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
@@ -217,11 +205,9 @@ const Appointment = () => {
         </div>
       </section>
 
-      {/* Appointment Form */}
       <section className="section-padding bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-12">
-            {/* Form */}
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 shadow-dental">
                 <h2 className="font-display text-2xl font-semibold mb-6">
@@ -235,7 +221,6 @@ const Appointment = () => {
                 )}
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {/* Full Name */}
                   <div>
                     <label htmlFor="fullName" className="form-label">
                       Nom complet <span className="text-destructive">*</span>
@@ -254,7 +239,6 @@ const Appointment = () => {
                     )}
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label htmlFor="email" className="form-label">
                       Adresse email <span className="text-destructive">*</span>
@@ -273,7 +257,6 @@ const Appointment = () => {
                     )}
                   </div>
 
-                  {/* Phone */}
                   <div>
                     <label htmlFor="phone" className="form-label">
                       Téléphone <span className="text-destructive">*</span>
@@ -292,7 +275,6 @@ const Appointment = () => {
                     )}
                   </div>
 
-                  {/* Service */}
                   <div>
                     <label htmlFor="service" className="form-label">
                       Service souhaité <span className="text-destructive">*</span>
@@ -316,7 +298,6 @@ const Appointment = () => {
                     )}
                   </div>
 
-                  {/* Date */}
                   <div>
                     <label htmlFor="date" className="form-label">
                       Date souhaitée <span className="text-destructive">*</span>
@@ -335,7 +316,6 @@ const Appointment = () => {
                     )}
                   </div>
 
-                  {/* Time */}
                   <div>
                     <label htmlFor="time" className="form-label">
                       Heure préférée
@@ -357,7 +337,6 @@ const Appointment = () => {
                   </div>
                 </div>
 
-                {/* Message */}
                 <div className="mt-6">
                   <label htmlFor="message" className="form-label">
                     Message (optionnel)
@@ -382,9 +361,7 @@ const Appointment = () => {
               </form>
             </div>
 
-            {/* Sidebar Info */}
             <div className="space-y-6">
-              {/* Hours */}
               <div className="bg-card rounded-xl p-6 shadow-dental">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -410,7 +387,6 @@ const Appointment = () => {
                 </div>
               </div>
 
-              {/* Info */}
               <div className="bg-primary/5 rounded-xl p-6 border border-primary/20">
                 <h3 className="font-display text-lg font-semibold mb-3">
                   À savoir
@@ -431,7 +407,6 @@ const Appointment = () => {
                 </ul>
               </div>
 
-              {/* Emergency */}
               <div className="bg-accent/10 rounded-xl p-6 border border-accent/20">
                 <h3 className="font-display text-lg font-semibold text-foreground mb-2">
                   Urgence dentaire ?

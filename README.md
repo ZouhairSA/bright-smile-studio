@@ -253,7 +253,7 @@ npm install
 
 ---
 
-## ✅ CHECKLIST DE DÉMARRAGE
+## CHECKLIST DE DÉMARRAGE
 
 - [ ] Node.js installé et vérifié
 - [ ] npm installé et vérifié
@@ -269,4 +269,3 @@ npm install
 
 ---
 
-**🎉 Félicitations ! Votre projet est maintenant démarré !**

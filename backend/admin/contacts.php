@@ -1,12 +1,4 @@
 <?php
-/**
- * Admin endpoint: manage contact messages
- *
- * Supported operations:
- * - GET:  list all contacts with user join
- * - POST: create / update / delete (action param)
- */
-
 require_once __DIR__ . '/common.php';
 require_admin();
 

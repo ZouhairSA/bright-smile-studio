@@ -55,7 +55,6 @@ const AdminDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // Simple local state for "add user" form
   const [newUserName, setNewUserName] = useState("");
   const [newUserEmail, setNewUserEmail] = useState("");
   const [newUserPassword, setNewUserPassword] = useState("");
@@ -89,7 +88,6 @@ const AdminDashboard = () => {
         fetch(`${apiBase}backend/admin/contacts.php`, { credentials: "include" }),
       ]);
 
-      // If the session is not admin, backend returns 403.
       if ([uRes, aRes, cRes].some(r => r.status === 403)) {
         setError("Accès refusé. Connectez-vous avec un compte administrateur.");
         return;
@@ -147,7 +145,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Users CRUD
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newUserName.trim() || !newUserEmail.trim() || !newUserPassword) return;
@@ -206,7 +203,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Appointments CRUD (edit/delete via prompts for simplicité académique)
   const handleDeleteAppointment = async (id: number) => {
     if (!window.confirm("Supprimer ce rendez-vous ?")) return;
     const fd = new FormData();
@@ -245,7 +241,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Contacts CRUD
   const handleDeleteContact = async (id: number) => {
     if (!window.confirm("Supprimer ce message de contact ?")) return;
     const fd = new FormData();
@@ -316,7 +311,6 @@ const AdminDashboard = () => {
                 <p className="mt-8 text-muted-foreground">Chargement...</p>
               ) : (
                 <div className="mt-8 space-y-10">
-                  {/* Users */}
                   <div>
                     <h2 className="font-display text-xl font-semibold text-foreground">
                       Utilisateurs ({users.length})
@@ -400,7 +394,6 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  {/* Appointments */}
                   <div>
                     <h2 className="font-display text-xl font-semibold text-foreground">
                       Rendez-vous ({appointments.length})
@@ -452,12 +445,8 @@ const AdminDashboard = () => {
                         </tbody>
                       </table>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Astuce: `user_id` est rempli seulement si l'utilisateur était connecté lors de la demande.
-                    </p>
                   </div>
 
-                  {/* Contacts */}
                   <div>
                     <h2 className="font-display text-xl font-semibold text-foreground">
                       Messages de contact ({contacts.length})

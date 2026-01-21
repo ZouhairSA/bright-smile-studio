@@ -75,7 +75,6 @@ const Login = () => {
           return;
         }
 
-        // Store user for a simple "Espace patient" page (academic demo).
         if (data.user) {
           localStorage.setItem("bss_user", JSON.stringify(data.user));
         }
@@ -108,7 +107,6 @@ const Login = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
             <div className="bg-card rounded-2xl p-8 shadow-dental-xl">
-              {/* Header */}
               <div className="text-center mb-8">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <LogIn className="w-8 h-8 text-primary" />
@@ -121,14 +119,12 @@ const Login = () => {
                 </p>
               </div>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-6">
                 {serverError && (
                   <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
                     {serverError}
                   </div>
                 )}
-                {/* Email */}
                 <div>
                   <label htmlFor="email" className="form-label">
                     Adresse email
@@ -147,7 +143,6 @@ const Login = () => {
                   )}
                 </div>
 
-                {/* Password */}
                 <div>
                   <label htmlFor="password" className="form-label">
                     Mot de passe
@@ -179,7 +174,6 @@ const Login = () => {
                   )}
                 </div>
 
-                {/* Forgot Password */}
                 <div className="flex justify-end">
                   <a
                     href="#"
@@ -189,7 +183,6 @@ const Login = () => {
                   </a>
                 </div>
 
-                {/* Submit */}
                 <Button
                   type="submit"
                   size="lg"
@@ -197,10 +190,9 @@ const Login = () => {
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Connexion..." : "Se connecter"}
-                </Button>
+                  </Button>
               </form>
 
-              {/* Register Link */}
               <div className="mt-6 text-center">
                 <p className="text-muted-foreground text-sm">
                   Pas encore de compte ?{" "}

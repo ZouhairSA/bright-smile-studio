@@ -113,7 +113,6 @@ const Register = () => {
       };
 
       if (!data.success) {
-        // Email déjà utilisée renvoie 409 côté PHP
         if (res.status === 409) {
           setErrors(prev => ({ ...prev, email: data.message || "Cette adresse email est déjà utilisée." }));
         } else {
@@ -122,7 +121,6 @@ const Register = () => {
         return;
       }
 
-      // Succès → on affiche l'écran de confirmation déjà prévu
       setIsSubmitted(true);
     } catch (err) {
       console.error(err);
@@ -176,7 +174,6 @@ const Register = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-lg mx-auto">
             <div className="bg-card rounded-2xl p-8 shadow-dental-xl">
-              {/* Header */}
               <div className="text-center mb-8">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <UserPlus className="w-8 h-8 text-primary" />
@@ -189,7 +186,6 @@ const Register = () => {
                 </p>
               </div>
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
                 {serverError && (
                   <div className="rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
@@ -197,7 +193,6 @@ const Register = () => {
                   </div>
                 )}
                 <div className="grid md:grid-cols-2 gap-4">
-                  {/* First Name */}
                   <div>
                     <label htmlFor="firstName" className="form-label">
                       Prénom <span className="text-destructive">*</span>
@@ -216,7 +211,6 @@ const Register = () => {
                     )}
                   </div>
 
-                  {/* Last Name */}
                   <div>
                     <label htmlFor="lastName" className="form-label">
                       Nom <span className="text-destructive">*</span>
@@ -236,7 +230,6 @@ const Register = () => {
                   </div>
                 </div>
 
-                {/* Email */}
                 <div>
                   <label htmlFor="email" className="form-label">
                     Adresse email <span className="text-destructive">*</span>
@@ -255,7 +248,6 @@ const Register = () => {
                   )}
                 </div>
 
-                {/* Phone */}
                 <div>
                   <label htmlFor="phone" className="form-label">
                     Téléphone
@@ -274,7 +266,6 @@ const Register = () => {
                   )}
                 </div>
 
-                {/* Password */}
                 <div>
                   <label htmlFor="password" className="form-label">
                     Mot de passe <span className="text-destructive">*</span>
@@ -305,7 +296,6 @@ const Register = () => {
                   </p>
                 </div>
 
-                {/* Confirm Password */}
                 <div>
                   <label htmlFor="confirmPassword" className="form-label">
                     Confirmer le mot de passe <span className="text-destructive">*</span>
@@ -333,7 +323,6 @@ const Register = () => {
                   )}
                 </div>
 
-                {/* Accept Terms */}
                 <div>
                   <label className="flex items-start gap-3 cursor-pointer">
                     <input
@@ -359,13 +348,11 @@ const Register = () => {
                   )}
                 </div>
 
-                {/* Submit */}
                 <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? "Création du compte..." : "Créer mon compte"}
-                </Button>
+                  </Button>
               </form>
 
-              {/* Login Link */}
               <div className="mt-6 text-center">
                 <p className="text-muted-foreground text-sm">
                   Déjà un compte ?{" "}

@@ -21,12 +21,6 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      {/* 
-        IMPORTANT (Apache/XAMPP deployment):
-        The app is served from http://localhost/bright-smile-studio/
-        Using basename ensures React Router matches routes correctly under this subfolder.
-        Vite sets import.meta.env.BASE_URL based on vite.config.ts "base".
-      */}
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -38,7 +32,6 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

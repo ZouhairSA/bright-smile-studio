@@ -1,12 +1,4 @@
 <?php
-/**
- * Admin endpoint: manage appointments
- *
- * Supported operations:
- * - GET:  list all appointments with user join
- * - POST: create / update / delete (action param)
- */
-
 require_once __DIR__ . '/common.php';
 require_admin();
 
@@ -70,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            // Validate datetime format (YYYY-MM-DD HH:MM)
             $normalizedDate = preg_replace('/^\s+|\s+$/', '', $date);
             if (strlen($normalizedDate) === 16) {
                 $normalizedDate .= ':00';

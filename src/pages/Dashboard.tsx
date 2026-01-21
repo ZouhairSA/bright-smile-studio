@@ -19,8 +19,6 @@ const Dashboard = () => {
   const apiBase = useMemo(() => import.meta.env.BASE_URL, []);
 
   useEffect(() => {
-    // For an academic project, we store the last logged-in user locally
-    // to display a simple "Espace patient" page after login.
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       navigate("/login", { replace: true });
@@ -100,10 +98,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-
-              <p className="text-xs text-muted-foreground mt-6">
-                Note: cette page est une interface simple pour le projet universitaire (session PHP + affichage côté client).
-              </p>
             </div>
           </div>
         </div>
