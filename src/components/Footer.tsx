@@ -127,7 +127,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-primary-foreground/50 text-sm">
-              © {currentYear} Cabinet Dentaire. Tous droits réservés.
+              © {currentYear} Cabinet Dentaire. Tous droits réservés. | Développé avec 💖 par <span className="text-primary font-medium">Jihane Ouaanda</span>
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-primary-foreground/50 text-sm hover:text-primary transition-colors">
